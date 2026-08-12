@@ -7,10 +7,6 @@ const app = express();
 
 app.use(cors());
 app.use(morgan("dev"));
-
-app.get("/", (req, res, next ) => {
-    next(new Error("Test Error"));
-});
-app.use(middleware)
+app.use(express.json())
 
 export default app;
