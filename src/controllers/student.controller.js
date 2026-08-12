@@ -1,5 +1,11 @@
-const getStudent = (req,res) => {
-    res.send("All Students")
-}
+const createStudent = (req, res) => {
+    const student = req.body;
 
-export default getStudent;
+    res.status(201).json({
+        success: true,
+        message: "Student created",
+        data: student
+    });
+};
+
+export default createStudent;
