@@ -3,6 +3,7 @@ import cors from "cors";
 import morgan from "morgan";
 import middleware  from "./middleware/error.middleware.js";
 import studentRoutes from "./routes/student.routes.js";
+import controller from "./controllers/student.controller.js"
 
 const app = express();
 
@@ -12,3 +13,4 @@ app.use(express.json())
 app.use("/api/student", studentRoutes);
 
 export default app;
+
