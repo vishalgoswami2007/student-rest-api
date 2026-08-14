@@ -84,4 +84,27 @@ const updateStudent = async (req,res) => {
       }
 }
 
-export { createStudent , getStudents , getStudentById , updateStudent };
+const deleteStudent = async (req,res) => {
+    try {
+        const student = await Student.findByIdAndDelete(req.params.id )
+        if (!student) {
+            return res.status(404).json({
+                success: false,
+                message:"user not found",
+                data:student
+            });
+        }
+        res.status(201).json({
+            success:true,
+            message:"User Delete Successfully",
+            data:student
+        })
+    } catch (error) {
+        res.status(404).json({
+            success:false,
+            message: error.message
+        })
+    }
+}
+
+export { createStudent , getStudents , getStudentById , updateStudent , deleteStudent};
