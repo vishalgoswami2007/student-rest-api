@@ -10,7 +10,16 @@ const createStudent = async (req, res) => {
             message: "Student created successfully",
             data: student
         });
+
     } catch (error) {
+
+        if (error.name === "ValidationError") {
+            return res.status(400).json({
+                success: false,
+                message: error.message
+            });
+        }
+
         res.status(500).json({
             success: false,
             message: error.message
