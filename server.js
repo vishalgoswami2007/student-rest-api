@@ -4,10 +4,14 @@ import connectDB from "./src/config/db.js";
 
 dotenv.config();
 
-console.log("MONGO_URI:", process.env.MONGO_URI);
-
 await connectDB();
 
-app.listen(process.env.PORT, () => {
-    console.log(`Server Running At ${process.env.PORT}`);
+const server = app.listen(5000, "127.0.0.1", () => {
+    console.log("Server Running At 5000");
+    console.log("Listening:", server.listening);
+    console.log("Address:", server.address());
+});
+
+server.on("error", (err) => {
+    console.log("SERVER ERROR:", err);
 });

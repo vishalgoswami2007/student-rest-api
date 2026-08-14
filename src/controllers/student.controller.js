@@ -1,11 +1,20 @@
-const createStudent = (req, res) => {
-    const student = req.body;
+import Student from "../models/student.model.js";
 
-    res.status(201).json({
-        success: true,
-        message: "Student created",
-        data: student
-    });
+const createStudent = async (req, res) => {
+    try {
+        const student = await Student.create(req.body);
+
+        res.status(201).json({
+            success: true,
+            message: "Student created successfully",
+            data: student
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
 };
 
 export default createStudent;
