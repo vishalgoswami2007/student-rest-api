@@ -20,17 +20,19 @@ const createStudent = async (req, res) => {
 
 const getStudents = async (req, res) => {
     try {
-        const { course } = req.query;
+        const { course, age } = req.query;
 
-        let students;
+        const filter = {};
 
         if (course) {
-            students = await Student.find({
-                course: course
-            });
-        } else {
-            students = await Student.find();
+            filter.course = course;
         }
+
+        if (age) {
+            filter.age = age;
+        }
+
+        const students = await Student.find(filter);
 
         res.status(200).json({
             success: true,
