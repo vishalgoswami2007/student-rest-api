@@ -1,3 +1,4 @@
+import { createElement } from "react";
 import Student from "../models/student.model.js";
 
 const createStudent = async (req, res) => {
@@ -17,4 +18,21 @@ const createStudent = async (req, res) => {
     }
 };
 
-export default createStudent;
+const getStudents = async(req,res) => {
+    try {
+        const student = await Student.find();
+
+        res.status(200).json({
+            success: true,
+            message: "student find successfully",
+            data: student
+        });
+    } catch (error) {
+        res.status(500).json({
+            success:false,
+            message:error.message
+        });
+    }
+};
+
+export { createStudent , getStudents };
