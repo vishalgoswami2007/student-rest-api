@@ -60,4 +60,28 @@ const getStudentById = async (req, res) => {
     }
 };
 
-export { createStudent , getStudents , getStudentById };
+const updateStudent = async (req,res) => {
+      try {
+        const student = await Student.findByIdAndUpdate(req.params.id , req.body , {new: true});
+         if (!student) {
+            return res.status(404).json({
+                success: false,
+                message: "Student not found",
+                data: student
+            });
+         }
+            res.status(200).json({
+            success: true,
+            message: "Student found successfully",
+            data: student
+        });
+
+      } catch (error) {
+        res.status(500).json({
+            success:false,
+            message: error.message
+        })
+      }
+}
+
+export { createStudent , getStudents , getStudentById , updateStudent };
