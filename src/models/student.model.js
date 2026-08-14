@@ -7,9 +7,13 @@ const studentSchema = new mongoose.Schema({
 }, age : {
     type:"Number",
     required:true,
+    min:15,
+    max:100,
 }, email: {
     type:"String",
-    required:false,
+    required:true,
+    unique:true,
+    match: /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 },course:{
     type:"String",
     required:true 
