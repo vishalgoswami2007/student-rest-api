@@ -18,19 +18,30 @@ const createStudent = async (req, res) => {
     }
 };
 
-const getStudents = async(req,res) => {
+const getStudents = async (req, res) => {
     try {
-        const student = await Student.find();
+        const { course } = req.query;
+
+        let students;
+
+        if (course) {
+            students = await Student.find({
+                course: course
+            });
+        } else {
+            students = await Student.find();
+        }
 
         res.status(200).json({
             success: true,
-            message: "student find successfully",
-            data: student
+            message: "Students fetched successfully",
+            data: students
         });
+
     } catch (error) {
         res.status(500).json({
-            success:false,
-            message:error.message
+            success: false,
+            message: error.message
         });
     }
 };
