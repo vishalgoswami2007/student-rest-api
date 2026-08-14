@@ -1,4 +1,4 @@
-import { createElement } from "react";
+
 import Student from "../models/student.model.js";
 
 const createStudent = async (req, res) => {
