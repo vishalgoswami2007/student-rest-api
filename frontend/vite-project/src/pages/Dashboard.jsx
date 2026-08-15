@@ -1,34 +1,53 @@
-import StatCard from "../components/StatCard";
-import StudentTable from "../components/StudentTable";
+import { useEffect, useState } from "react";
+
+import StatCard from "../components/StatCard.jsx";
+import StudentTable from "../components/StudentTable.jsx";
+
+import { getStudents } from "../services/studentApi.js";
 
 const Dashboard = () => {
-    const students = [
-        {
-            _id: "1",
-            name: "Vishal Goswami",
-            email: "vishal@gmail.com",
-            age: 20,
-            course: "BCom",
-        },
-        {
-            _id: "2",
-            name: "Rahul Sharma",
-            email: "rahul@gmail.com",
-            age: 21,
-            course: "BCA",
-        },
-        {
-            _id: "3",
-            name: "Priya Singh",
-            email: "priya@gmail.com",
-            age: 19,
-            course: "BBA",
-        },
-    ];
+    const [students, setStudents] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchStudents = async () => {
+            try {
+                const response = await getStudents();
+
+                setStudents(response.data);
+            } catch (error) {
+                console.error("Error fetching students:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchStudents();
+    }, []);
+
+    // Total students
+    const totalStudents = students.length;
+
+    // Unique courses
+    const totalCourses = new Set(
+        students.map((student) => student.course)
+    ).size;
+
+    // Average age
+    const averageAge =
+        totalStudents > 0
+            ? (
+                  students.reduce(
+                      (total, student) => total + student.age,
+                      0
+                  ) / totalStudents
+              ).toFixed(1)
+            : 0;
 
     return (
         <div className="space-y-8">
 
+            {/* Header */}
             <div>
                 <h1 className="text-2xl font-bold text-slate-900">
                     Dashboard
@@ -39,36 +58,40 @@ const Dashboard = () => {
                 </p>
             </div>
 
+            {/* Stats */}
             <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+
                 <StatCard
                     title="Total Students"
-                    value="24"
-                    description="+4 this month"
+                    value={loading ? "..." : totalStudents}
+                    description="Students in database"
                     icon="👨‍🎓"
                 />
 
                 <StatCard
                     title="Total Courses"
-                    value="5"
+                    value={loading ? "..." : totalCourses}
                     description="Active courses"
                     icon="📚"
                 />
 
                 <StatCard
                     title="Average Age"
-                    value="20.4"
+                    value={loading ? "..." : averageAge}
                     description="Across all students"
                     icon="📊"
                 />
 
                 <StatCard
                     title="New Students"
-                    value="4"
-                    description="Added this month"
+                    value={loading ? "..." : totalStudents}
+                    description="Current student records"
                     icon="✨"
                 />
+
             </div>
 
+            {/* Recent Students */}
             <StudentTable students={students} />
 
         </div>
