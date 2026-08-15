@@ -1,8 +1,16 @@
-const middleware =(error, req , res , next) => {
-    res.status(500).json({
-        "success": false,
-        "message": "Something went wrong"
-    })
-}
+const errorMiddleware = (err, req, res, next) => {
 
-export default middleware;
+    if (err.name === "ValidationError") {
+        return res.status(400).json({
+            success: false,
+            message: err.message
+        });
+    }
+
+    res.status(500).json({
+        success: false,
+        message: err.message
+    });
+};
+
+export default errorMiddleware;

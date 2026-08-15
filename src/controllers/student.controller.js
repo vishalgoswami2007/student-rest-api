@@ -1,7 +1,7 @@
 
 import Student from "../models/student.model.js";
 
-const createStudent = async (req, res) => {
+const createStudent = async (req, res , next) => {
     try {
         const student = await Student.create(req.body);
 
@@ -12,18 +12,7 @@ const createStudent = async (req, res) => {
         });
 
     } catch (error) {
-
-        if (error.name === "ValidationError") {
-            return res.status(400).json({
-                success: false,
-                message: error.message
-            });
-        }
-
-        res.status(500).json({
-            success: false,
-            message: error.message
-        });
+           next(error);
     }
 };
 

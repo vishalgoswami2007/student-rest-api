@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
-import middleware from "./middleware/error.middleware.js";
+import errorMiddleware from "./middleware/error.middleware.js";
 import studentRoutes from "./routes/student.routes.js";
 
 const app = express();
@@ -9,9 +9,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
+app.use(errorMiddleware);
+
 
 app.use("/api/student", studentRoutes);
 
-app.use(middleware);
+
 
 export default app;
