@@ -10,10 +10,14 @@
     "start": "node server.js"
   },
   "dependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "axios": "^1.19.0",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "mongoose": "^9.9.2",
-    "morgan": "^1.11.0"
+    "morgan": "^1.11.0",
+    "react-router-dom": "^7.18.2",
+    "tailwindcss": "^4.3.3"
   }
 }

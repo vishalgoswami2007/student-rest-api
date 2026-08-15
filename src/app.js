@@ -9,11 +9,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
-app.use(errorMiddleware);
-
 
 app.use("/api/student", studentRoutes);
 
-
+// Error middleware should be last
+app.use(errorMiddleware);
 
 export default app;
